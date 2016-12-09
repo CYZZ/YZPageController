@@ -28,7 +28,7 @@
         self.normalColor = [UIColor blackColor];
         self.selectedColor = [UIColor blackColor];
         self.normalSize = 15;
-        self.seleteSize = 18;
+        self.seletedSize = 18;
         self.numberOfLines = 0;
     }
     return self;
@@ -84,11 +84,48 @@
     CGFloat g = _normalGreen + (_selectedGreen - _normalGreen) * rate;
     CGFloat b = _normalBlue + (_selectedBlue - _normalBlue) * rate;
     CGFloat a = _normalAlpha + (_selectedAlpha - _normalAlpha) * rate;
-    self.textColor = kRGBColor(r, g, b);
     
+    self.textColor = [UIColor colorWithRed:r green:g blue:b alpha:a];
+    CGFloat minScale = self.normalSize / self.seletedSize;
+    CGFloat trueScale = minScale + (1 - minScale)*rate;
+    self.transform = CGAffineTransformMakeScale(trueScale, trueScale);
     
-    
-    
+}
+
+- (void)selectedWithoutAnimation
+{
+    self.rate = 1.0;
+    _selected = YES;
+}
+
+- (void)deselectedWithoutAnimation
+{
+    self.rate = 0;
+    _selected = NO;
+}
+
+- (void)setSelectedColor:(UIColor *)selectedColor
+{
+    _selectedColor = selectedColor;
+    [selectedColor getRed:&_selectedRed green:&_selectedGreen blue:&_selectedBlue alpha:&_selectedAlpha];
+}
+
+- (void)setNormalColor:(UIColor *)normalColor
+{
+    _normalColor = normalColor;
+    [normalColor getRed:&_normalRed green:&_normalGreen blue:&_normalBlue alpha:&_normalAlpha];
+}
+
+#pragma mark - 点击触发方法
+/**
+ 当点击标题结束的时候触发
+ */
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    //  调用代理方法
+    if ([self.delegate respondsToSelector:@selector(didPressedMenuItem:)]) {
+        [self.delegate didPressedMenuItem:self];
+    }
 }
 
 @end

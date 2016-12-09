@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YZScrollView : UIScrollView
+@interface YZScrollView : UIScrollView<UIGestureRecognizerDelegate>
+/// 左滑时同时启动其他手势，比如系统左滑pop，slidemenu滑动，默认是NO
+
+@property (nonatomic, assign) BOOL otherGestureRecognizerSimultaneously;
 
 @end

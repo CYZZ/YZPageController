@@ -27,7 +27,7 @@ typedef NS_ENUM(NSUInteger, YZMenuItemState) {
 
 @property (nonatomic, assign) CGFloat rate;
 @property (nonatomic, assign) CGFloat normalSize;
-@property (nonatomic, assign) CGFloat seleteSize;
+@property (nonatomic, assign) CGFloat seletedSize;
 @property (nonatomic, strong) UIColor *normalColor;
 @property (nonatomic, strong) UIColor *selectedColor;
 @property (nonatomic, assign, getter=isSelected) BOOL selected;
